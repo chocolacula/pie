@@ -5,7 +5,6 @@ import "sort"
 // Removes elements at indices in idx from input slice, returns resulting slice.
 // If an index is out of bounds, skip it.
 func Delete[T any](ss []T, idx ...int) []T {
-
 	// short path O(1) inplace
 	if len(idx) == 1 {
 		i := idx[0]
@@ -32,5 +31,35 @@ func Delete[T any](ss []T, idx ...int) []T {
 	}
 	ss2 = append(ss2, ss[prev:]...)
 
+	return ss2
+}
+
+func DeleteSet[T any](ss []T, idx ...int) []T {
+
+	// short path O(1) inplace
+	if len(idx) == 1 {
+		i := idx[0]
+
+		if i < 0 || i >= len(ss) {
+			return ss
+		}
+		ss = append(ss[:i], ss[i+1:]...)
+		return ss
+	}
+
+	// long path O(n) CPU O(m) memory
+	del := make(map[int]bool)
+	for _, i := range idx {
+		del[i] = true
+	}
+
+	ss2 := make([]T, 0, len(ss))
+
+	for i := 0; i < len(ss); i++ {
+		if del[i] {
+			continue
+		}
+		ss2 = append(ss2, ss[i])
+	}
 	return ss2
 }
