@@ -90,6 +90,16 @@ func BenchmarkDelete(b *testing.B) {
 	}
 }
 
+func BenchmarkDeleteShort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		pie.Delete(big_arr[:16],
+			7,
+			2,
+			9,
+		)
+	}
+}
+
 func BenchmarkDeleteSet(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		pie.DeleteSet(big_arr,
@@ -101,6 +111,16 @@ func BenchmarkDeleteSet(b *testing.B) {
 			10_000,
 			5000,
 			1000,
+		)
+	}
+}
+
+func BenchmarkDeleteSetShort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		pie.DeleteSet(big_arr[:16],
+			7,
+			2,
+			9,
 		)
 	}
 }
